@@ -1,0 +1,139 @@
+@media (max-width: 1250px) {
+    .leftout {
+        position: fixed;
+        left: -100%;
+        transition: 0.3s;
+        z-index: 100;
+        background: black;
+        width: 370px;
+    }
+
+    .leftout.active {
+        left: 0;
+    }
+
+    .rightout {
+        width: 100%;
+        margin-left: 0;
+        padding: 0px 8px;
+    }
+
+    .container .left {
+        width: 100%;
+    }
+    .divleft{
+        font-size: 12px;
+       }
+    .humberg {
+        display: block;
+        cursor: pointer;
+    }
+}
+@media (max-width:787px){
+    .nav .box2 {
+        position: absolute;
+        right: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+   
+    .playbar{
+        display: flex ;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: auto;
+    }
+    .leftout {
+        width: 300px;
+    }
+    .right{
+        height: 540px;
+    }
+
+    .card-container {
+        justify-content: space-between;
+        padding: 0px;
+        gap: 20px;
+    }
+
+    .card {
+        width: calc(50% - 10px);
+    }
+
+    .seekbar {
+        width: 50vw;
+    }
+    .divright{
+        width: 185px;
+    height: 15px;
+    }
+    
+}
+
+@media (max-width: 580px) {
+    .leftout {
+        width: 270px;
+    }
+
+  
+  .box1{
+    padding-bottom: 6px;
+  }
+    .right .card-container .card {
+        width: 45%;
+        margin-bottom: 0px;
+    }
+
+    .seekbar {
+        width: 35vw;
+    }
+    .nav{
+        background-color: #1f1f1f;
+        border-radius: 25px;
+    }
+    .card-container .card{
+        background-color: #1f1f1f;
+    }
+    .rightout .right{
+        background-color: black;
+    }
+
+    body .playbar {
+        padding: 0px;
+    }
+
+    .playbuttons {
+        gap: 13px;
+    }
+}
+
+@media (max-width: 385px) {
+    
+    .card-container {
+        gap: 15px;
+        padding: 0px;
+        /* max-height: 435px; */
+    }
+    .right{
+        /* top: 0px; */
+        height: 84%;
+    }
+    .divleft .wrap{
+        font-size: 10px;
+    }
+}
+@media (max-height: 700px) {
+    .card-container{
+        max-height: 450px;
+    }
+}
+
+@media (max-height: 872px) {
+    .card-container{
+        max-height: 515px;
+    }
+  
+}
+

@@ -1,0 +1,75 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Flow+Circular&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.flex{
+    display: flex;
+}
+.justify-content{
+    justify-content:space-evenly;
+}
+.align-center{
+    align-items:center;
+}
+.justify-center{
+    justify-content:center;
+}
+.border{
+    border: 2px solid red;
+    margin: 5px;
+}
+.invert{
+    filter:invert(1);
+}
+.bgb{
+    background-color: black;
+    color: white;
+}
+.bgg{
+    background-color: #1f1f1f ;
+    color: white;
+}
+.rnd-2{
+    border-radius: 15px;
+}
+.rnd{
+    border-radius: 5px;
+}
+.m-1{
+    margin: 5px;
+}
+.p-1{
+    padding: 5px;
+}
+.a-atr{
+    color: gray;
+    text-decoration: none;
+}
+
+.m-2{
+    margin: 15px;
+}
+.p-2{
+    padding: 15px;
+}
+.play{
+    position: absolute;
+    opacity: 0;
+    bottom: 40px;
+    right: 20px;
+    transition: all .3s ease-out;
+}
+.gap-1{
+    gap: 15px;
+}
+.gap-2{
+   gap: 35px;
+}
+.artist{
+    font-size: 10px;
+    font-weight: 400;
+}
+.wrap{
+    display: flex;
+    flex-wrap: wrap;
+  
+}

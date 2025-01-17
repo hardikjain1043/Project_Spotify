@@ -1,0 +1,383 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", serif;
+}
+
+.leftout .left{
+    /* margin: 0px 10px; */
+    padding: 25px 25px 45px 25px;
+    width: 25vw;
+    height: 87%;
+    
+    flex-direction: column;
+    justify-content: space-between;
+}
+.rightout{
+    width: 100%;
+    padding: 0px 15px 0px 5px;;
+}
+.container{
+    height: 80vh;
+}
+
+.right{
+    padding: 10px 25px 45px 25px;
+    width: 25vw;
+    position: sticky;
+    height: 89%;
+    top: 75px;
+    width: auto;
+}
+
+
+.navout{
+    height: 60px;
+    position: sticky;
+    top: 0px;
+    padding: 8px;
+}
+
+.nav{
+    justify-content: space-between;
+    height: 48px;
+    padding: 7px 7px 0px 7px ;
+}
+.homeim{
+  width: 24px ;
+}
+.ghantaim{
+    width: 18px;
+}
+.home:hover{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: #2C2C2C;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.libsvg img:hover{
+    cursor: pointer;
+}
+.box1{
+    display: flex;
+    align-items: center;
+}
+.icon{
+    width: 22px;
+    position: relative;
+    left: 32px;
+}
+.search img:hover{
+    cursor: pointer;
+}
+.browse{
+    width: 22px;
+    position: relative;
+    right: 32px;
+}
+.ghanta{
+    margin: 14px 22px;
+}
+.home{
+    margin: 0px 7px;
+    width: 45px;
+    border-radius: 50px;
+    height: 45px;
+    justify-content: center;
+    display: flex;
+    position: relative;
+    bottom: 2px;
+}
+
+ .search input{
+    padding: 3px 155px 0px 77px;
+    background-color:#1F1F1F;
+    font-size: large;
+    font-weight: 700;
+    color: rgb(246, 246, 246);
+    border-radius: 25px;
+    border: none;
+    column-rule-color: blue;
+}
+input:hover{
+ cursor: text;
+
+}
+
+.nex{
+    width: 42px;
+}
+.box2 .search{
+    height: 40px;
+}
+.box2{
+    padding: 5px 0px 0px 0px;
+}
+.libsvg img{
+    width: 20px;
+    z-index: 1;
+}
+.left .libsvg{
+    justify-content: space-between;
+    font-size: 14px;
+    color: gray;
+}
+
+.left .libsvg:hover{
+  color: white;
+}
+.libsvg .leftl1{
+    display: flex;
+    align-items:center ;
+}
+.leftout{
+    position: sticky;
+    top: 76px;
+    padding: 0px 10px;
+}
+.footul{
+    flex-wrap:wrap ;
+}
+
+.footli{
+    font-size: 12px;
+    color: gray;
+}
+.btn img{
+ width: 15px;
+}
+.btn{
+    font-weight: 600;
+    width: 90px;
+    height: 30px;
+    justify-content: space-evenly;
+    cursor: pointer;
+    margin-top: 10px;
+    border:1px solid rgba(255, 255, 255, 0.558);
+}
+.playbar{
+    background-color: #121212;
+    height: 79px;
+    position: sticky;
+    bottom: 0px;
+}
+.card-container .card{
+   width: 150px;
+   height: 210px;
+   flex-direction: column;
+    font-size: 10px;
+    position: relative;
+    background-color: rgba(65, 65, 65, 0.214);
+    /* background-color: #000000; */
+    transition: all 0.7s;
+}
+.card-container .card:hover{
+    background-color: rgba(99, 99, 99, 0.355);
+    /* background-color: black; */
+    width: 152px;
+    cursor: pointer;
+    .play{
+        opacity: 1; 
+        bottom: 78px !important;
+    }
+}
+/* .card-container{
+    justify-content: space-evenly;
+   flex-wrap: wrap;
+   max-height: 72vh;
+   overflow-y: scroll; 
+} */
+
+.card-container {
+    display: flex;
+    justify-content: flex-start;  /* Changed from space-evenly */
+    flex-wrap: wrap;
+    gap: 20px;  /* Added gap */
+    padding: 15px;
+    max-height: 600px;
+}
+/* Target the specific div */
+.card-container {
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #444 #222; /* Scroll thumb and track colors */
+  }
+  
+  /* Webkit-based browsers (Chrome, Edge, Safari) */
+  .card-container::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+  }
+  
+  .card-container::-webkit-scrollbar-thumb {
+    background-color: #444; /* Thumb color */
+    border-radius: 6px; /* Rounded corners for the thumb */
+    border: 3px solid #222; /* Space around the thumb */
+  }
+  
+  .card-container::-webkit-scrollbar-track {
+    background-color: #222; /* Track color */
+    border-radius: 6px; /* Rounded corners for the track */
+  }
+  
+.card img{
+    width: 90%;
+    object-fit: contain;
+}
+.Album{
+    margin-top: 30px;
+}
+
+.playbuttons img{
+    width: 15px;
+}
+.pause{
+    width: 15px !important;
+    padding: 6px;
+    border-radius: 50px;
+    background-color: #444;
+    height: 15px;
+}
+.pause:hover{
+    cursor: pointer;
+}
+.son_name{
+    font-size: 13px;
+    font-weight: 500;
+     max-height: 47vh;
+     overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+    width: 100%;
+}
+.son_name ul li .info{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    padding-left: 10px;
+}
+.son_name ul li {
+    list-style-type: none;
+    padding: 7px;
+    cursor: pointer;
+    justify-content: space-between;
+    width: 89%;    
+   background-color: #0000005a;
+   align-items: center;
+   border: 2px solid #fffefe;
+    border-radius: 5px;
+    margin: 10px 0px;
+    border-radius: 8px;
+}
+.pauseside2{
+    width: 14px !important;
+    padding: 5px;
+    height: 14px;
+    margin: 5px;
+    border: 1px solid #000000;
+    border-radius: 50px;
+}
+
+.son_name {
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #444 #222;
+    /* overflow-x: clip; Scroll thumb and track colors */
+  }
+  
+  /* Webkit-based browsers (Chrome, Edge, Safari) */
+  .son_name::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+    
+  }
+  
+  .son_name::-webkit-scrollbar-thumb {
+    background-color: #444; /* Thumb color */
+    border-radius: 6px; /* Rounded corners for the thumb */
+    border: 5px solid #222; /* Space around the thumb */
+  }
+  
+  .son_name::-webkit-scrollbar-track {
+    background-color: #222; /* Track color */
+    border-radius: 24px; /* Rounded corners for the track */
+  }
+  .footer{
+    margin-top: 15px;
+  }
+
+
+  .pauseside{
+    width: 15px !important;
+    padding: 10px;
+    height: 15px;
+  }
+
+  .seekbar{
+    height: 6px;
+    border-radius: 10px;
+    background-color: #444;
+    width: 35vw;
+    cursor: pointer;
+    position: relative;
+    bottom: 5px;
+  }
+  .playbar{
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+  }
+  .divmid{
+    position: sticky;
+    bottom: 13px;
+  }
+  .circle{
+    width: 10px;
+    height:10px;
+    border-radius: 50px;
+    background-color: #bfbfbf;
+    position: relative;
+    left: -1px;
+    transition: left 5s ease ease-in-out;
+    bottom: 2px;
+  }
+  .humberg{
+    display: none;
+  }
+  .path{
+    background-color: #bfbfbf;
+    position: relative;
+    left: -8px;
+    width: 2px;
+    height: 6px;
+    border-radius: 14px;
+    transition: left 0.5s ease;
+  }
+
+  .playbuttons img{
+  cursor: pointer;
+
+  }
+  .divleft{
+    width: 325px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 400;
+    justify-content: center;
+  }
+  .divright{
+    width: 325px;
+    height: 35px;
+  }
+  .range input {
+    accent-color: #65656517;
+    width: 125px;
+    height: 5px;
+    cursor: pointer;
+  }
+ .vol-img{
+    cursor: pointer;
+ }
