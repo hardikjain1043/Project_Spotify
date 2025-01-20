@@ -17,12 +17,15 @@ async function getsongs(folder) {
     console.log("getting songs from", currentfolder);
 
     try {
-        // Use relative path
-        const response = await fetch(`${currentfolder}songs.json`);
+        // Use relative path and make sure it matches your file structure
+        const response = await fetch(`${currentfolder}/songs.json`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const songData = await response.json();
 
-        // Update songs array with the urls from the JSON
-        songs = songData.map(song => song.url);
+        // Store both title and url for each song
+        songs = songData;
 
         console.log("Songs loaded:", songs);
 
@@ -44,7 +47,8 @@ function playSong(index) {
         return;
     }
 
-    const track = `${currentfolder}${songs[index]}`;
+    // Use the url from the songs array
+    const track = `${currentfolder}${songs[index].url}`;
     console.log("Track to play:", track);
 
     audio.src = track;
@@ -70,7 +74,8 @@ function playSong(index) {
     // document.querySelector(".runningtime").innerText = "00:00";
 };
 function updateUI(index) {
-    const songName = songs[index].replace(/\.\w+$/, "").replaceAll("%20", " ");
+    // Use the title from the song object
+    const songName = songs[index].title;
 
     document.querySelector(".divleft").innerHTML = `
         <div class="carimg"><img src="img/musiclogo.svg" alt="Music Logo"></div>
@@ -127,7 +132,7 @@ async function displayAlbum() {
                     </div>
                     <div class="caption">
                         <h2>${metadata.title}</h2>
-                        <p>${metadata.description || ''}</p>
+                        <p>${metadata.discription || ''}</p>
                         <small>${songs.length} songs</small>
                     </div>
                 </div>
@@ -156,17 +161,19 @@ function displaySongList() {
     songListContainer.innerHTML = ""; // Clear any existing content
 
     songs.forEach((song, index) => {
-        const songName = song.replace(/\.\w+$/, "").replaceAll("%20", " ");
+        // Use the title from the song object
+        const songName = song.title;
 
         const songItem = document.createElement("li");
         songItem.classList.add("flex");
         songItem.innerHTML = `
             <img src="img/musiclogo.svg" alt="" class="invert musiclogo p-1">
             <div class="info">
-                <div>${songName}</div></div>
-                <div class="playimgbut flex artist m-1 data-index="${index}" " >
-                 <img src="img/playingbutton.svg" class="invert play-song pauseside2" alt="">
-                  <span class="playnow flex align-center">play song</span></div>
+                <div>${songName}</div>
+            </div>
+            <div class="playimgbut flex artist m-1">
+                <img src="img/playingbutton.svg" class="invert play-song pauseside2" data-index="${index}" alt="">
+                <span class="playnow flex align-center">play song</span>
             </div>`;
 
         // Add click listener to play the song
