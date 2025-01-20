@@ -22,7 +22,7 @@ async function getsongs(folder) {
         const songData = await response.json();
 
         // Update the songs array with just the filenames
-        songs = songData.map(song => song.title + ".mp3");
+        songs = songData.map(song => song.url);
 
         console.log("Songs loaded:", songs);
 
