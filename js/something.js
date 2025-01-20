@@ -85,90 +85,72 @@ function updateUI(index) {
 }
 
 async function getalbumlist() {
- try{
-    const response=await fetch("/songs/albumlist.json");
-    const albumlist=await response.json();
-    console.log(albumlist);
- }   catch(error){
-    console.error("Error fetching album list:", error);
-    return ["1","2", "ncs","Gymsongs", "phonk"];
- }
+    try {
+        const response = await fetch("/songs/albumlist.json");
+        const albumlist = await response.json();
+        console.log("Albums loaded:", albumlist);
+        return albumlist;
+    } catch (error) {
+        console.error("Error fetching album list:", error);
+        return ["2", "ncs", "phonk"];
+    }
 }
-
 
 async function displayAlbum() {
     console.log("Fetching albums...");
-   const albums=[];;
-    try {
-        const response = await fetch(`/songs/${albums}`);
-        const responseText = await response.text();
+    const albums = await getalbumlist();
+    const cardContainer = document.querySelector(".card-container");
+    cardContainer.innerHTML = ""; // Clear existing content
 
-        const albumDiv = document.createElement("div");
-        albumDiv.innerHTML = responseText;
+    // Process each album individually
+    for (const folder of albums) {
+        try {
+            console.log(`Processing album: ${folder}`);
 
-        const anchors = albumDiv.getElementsByTagName("a");
-        const cardContainer = document.querySelector(".card-container");
+            // Fetch info.json for folder metadata
+            const metadataResponse = await fetch(`/songs/${folder}/info.json`);
+            const metadata = await metadataResponse.json();
 
-        const anchorArray = Array.from(anchors);
-        cardContainer.innerHTML = ""; // Clear any existing content
+            // Fetch songs.json to get song count
+            const songsResponse = await fetch(`/songs/${folder}/songs.json`);
+            const songs = await songsResponse.json();
 
-        for (const anchor of anchorArray) {
-            if (anchor.href.includes("songs")) {
-                const folder = anchor.href.split("/").slice(-2)[0];
-                console.log("Folder found:", folder);
-
-                try {
-                    // Fetch info.json for folder metadata
-                    const metadataResponse = await fetch(`/songs/${folder}/info.json`);
-                    const metadata = await metadataResponse.json();
-
-                    // Fetch songs.json to get song count
-                    const songsResponse = await fetch(`/songs/${folder}/songs.json`);
-                    const songs = await songsResponse.json();
-
-                    // Append album card to the container
-                    cardContainer.innerHTML += `
-                        <div class="card flex align-center justify-content rnd" data-folder="${folder}">
-                            <img class="rnd"
-                                src="/songs/${folder}/cover.png"
-                                alt="${metadata.title}">
-                            <div class="play">
-                                <svg fill="#000000" height="27px" width="27px" viewBox="0 0 512 512">
-                                    <circle cx="256" cy="256" r="256" fill="green"></circle>
-                                    <polygon points="189.776,141.328 189.776,370.992 388.672,256.16" fill="#000000"></polygon>
-                                </svg>
-                            </div>
-                            <div class="caption">
-                                <h2>${metadata.title}</h2>
-                                <p>${metadata.discription}</p>
-                                <small>${songs.length} songs</small>
-                            </div>
-                        </div>
-                    `;
-                } catch (error) {
-                    console.error(`Error loading metadata for folder ${folder}:`, error);
-                }
-            }
+            // Append album card to the container
+            cardContainer.innerHTML += `
+                <div class="card flex align-center justify-content rnd" data-folder="${folder}">
+                    <img class="rnd"
+                        src="/songs/${folder}/cover.png"
+                        alt="${metadata.title}">
+                    <div class="play">
+                        <svg fill="#000000" height="27px" width="27px" viewBox="0 0 512 512">
+                            <circle cx="256" cy="256" r="256" fill="green"></circle>
+                            <polygon points="189.776,141.328 189.776,370.992 388.672,256.16" fill="#000000"></polygon>
+                        </svg>
+                    </div>
+                    <div class="caption">
+                        <h2>${metadata.title}</h2>
+                        <p>${metadata.description}</p>
+                        <small>${songs.length} songs</small>
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            console.error(`Error loading album ${folder}:`, error);
         }
-
-        // Add click event listeners to cards
-        Array.from(document.getElementsByClassName("card")).forEach((card) => {
-            card.addEventListener("click", async (event) => {
-                const folder = event.currentTarget.dataset.folder;
-                console.log("Loading songs from folder:", folder);
-
-                await getsongs(`songs/${folder}`);
-                if (songs.length > 0) {
-                    playSong(0); // Play the first song from the selected album
-                }
-            });
-        });
-
-        console.log("Albums displayed successfully.");
-    } catch (error) {
-        console.error("Error fetching or displaying albums:", error);
-        alert("Failed to load albums. Please check the server.");
     }
+
+    // Add click event listeners to cards
+    Array.from(document.getElementsByClassName("card")).forEach((card) => {
+        card.addEventListener("click", async (event) => {
+            const folder = event.currentTarget.dataset.folder;
+            console.log("Loading songs from folder:", folder);
+
+            await getsongs(`songs/${folder}`);
+            if (songs.length > 0) {
+                playSong(0);
+            }
+        });
+    });
 }
 
 function displaySongList() {
