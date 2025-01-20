@@ -17,11 +17,11 @@ async function getsongs(folder) {
     console.log("getting songs from", currentfolder);
 
     try {
-        // Fetch the songs.json file from the folder
-        const response = await fetch(`/${currentfolder}songs.json`);
+        // Use relative path
+        const response = await fetch(`${currentfolder}songs.json`);
         const songData = await response.json();
 
-        // Update the songs array with just the filenames
+        // Update songs array with the urls from the JSON
         songs = songData.map(song => song.url);
 
         console.log("Songs loaded:", songs);
@@ -44,11 +44,10 @@ function playSong(index) {
         return;
     }
 
-    const track = `/${currentfolder}${songs[index]}`;
+    const track = `${currentfolder}${songs[index]}`;
     console.log("Track to play:", track);
 
     audio.src = track;
-    console.log(audio.src);
     audio.play()
         .then(() => {
             console.log("Playback started:", track);
@@ -86,8 +85,8 @@ function updateUI(index) {
 
 async function getalbumlist() {
     try {
-        // Update the path to match your GitHub Pages URL structure
-        const response = await fetch("/spotifytryingagain/songs/albumlist.json");
+        // Use relative path instead of absolute
+        const response = await fetch("songs/albumlist.json");
         const albumlist = await response.json();
         console.log("Albums loaded:", albumlist);
         return albumlist;
@@ -107,18 +106,19 @@ async function displayAlbum() {
         try {
             console.log(`Processing album: ${folder}`);
 
-            // Update paths to include /spotifytryingagain/
-            const metadataResponse = await fetch(`/spotifytryingagain/songs/${folder}/info.json`);
+            // Use relative paths
+            const metadataResponse = await fetch(`songs/${folder}/info.json`);
             const metadata = await metadataResponse.json();
 
-            const songsResponse = await fetch(`/spotifytryingagain/songs/${folder}/songs.json`);
+            const songsResponse = await fetch(`songs/${folder}/songs.json`);
             const songs = await songsResponse.json();
 
             cardContainer.innerHTML += `
                 <div class="card flex align-center justify-content rnd" data-folder="${folder}">
                     <img class="rnd"
-                        src="/spotifytryingagain/songs/${folder}/cover.png"
-                        alt="${metadata.title}">
+                        src="songs/${folder}/cover.png"
+                        alt="${metadata.title}"
+                        onerror="this.src='img/musiclogo.svg'">
                     <div class="play">
                         <svg fill="#000000" height="27px" width="27px" viewBox="0 0 512 512">
                             <circle cx="256" cy="256" r="256" fill="green"></circle>
@@ -127,7 +127,7 @@ async function displayAlbum() {
                     </div>
                     <div class="caption">
                         <h2>${metadata.title}</h2>
-                        <p>${metadata.description}</p>
+                        <p>${metadata.description || ''}</p>
                         <small>${songs.length} songs</small>
                     </div>
                 </div>
@@ -193,8 +193,8 @@ async function main() {
         // console.log(e.target.);
         e.addEventListener("click", () => {
             currentSongIndex = index;
-            audio.src = `/${currentfolder}${e.querySelector(".info div").innerText}.mp3`;
-            playSong(audio.src, index);
+            audio.src = `${currentfolder}${e.querySelector(".info div").innerText}.mp3`;
+            playSong(index);
             play.src = "img/plaed.svg";
         });
     })
