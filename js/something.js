@@ -13,18 +13,18 @@ function formatTime(seconds) {
 
 
 async function getsongs(folder) {
-    currentfolder = folder.endsWith("/") ? folder : folder + "/";
+    // Remove any double slashes and ensure single slash
+    currentfolder = folder.replace(/\/+/g, '/');
+    if (!currentfolder.endsWith('/')) currentfolder += '/';
+
     console.log("getting songs from", currentfolder);
 
     try {
-        // Use relative path and make sure it matches your file structure
-        const response = await fetch(`${currentfolder}/songs.json`);
+        const response = await fetch(`${currentfolder}songs.json`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const songData = await response.json();
-
-        // Store both title and url for each song
         songs = songData;
 
         console.log("Songs loaded:", songs);
@@ -47,8 +47,8 @@ function playSong(index) {
         return;
     }
 
-    // Use the url from the songs array
-    const track = `${currentfolder}${songs[index].url}`;
+    // Clean up the path to ensure single slashes
+    const track = `${currentfolder}${songs[index].url}`.replace(/\/+/g, '/');
     console.log("Track to play:", track);
 
     audio.src = track;
@@ -90,7 +90,6 @@ function updateUI(index) {
 
 async function getalbumlist() {
     try {
-        // Use relative path instead of absolute
         const response = await fetch("songs/albumlist.json");
         const albumlist = await response.json();
         console.log("Albums loaded:", albumlist);
@@ -111,17 +110,18 @@ async function displayAlbum() {
         try {
             console.log(`Processing album: ${folder}`);
 
-            // Use relative paths
-            const metadataResponse = await fetch(`songs/${folder}/info.json`);
+            // Clean up paths to ensure single slashes
+            const folderPath = `songs/${folder}`.replace(/\/+/g, '/');
+            const metadataResponse = await fetch(`${folderPath}/info.json`);
             const metadata = await metadataResponse.json();
 
-            const songsResponse = await fetch(`songs/${folder}/songs.json`);
+            const songsResponse = await fetch(`${folderPath}/songs.json`);
             const songs = await songsResponse.json();
 
             cardContainer.innerHTML += `
                 <div class="card flex align-center justify-content rnd" data-folder="${folder}">
                     <img class="rnd"
-                        src="songs/${folder}/cover.png"
+                        src="${folderPath}/cover.png"
                         alt="${metadata.title}"
                         onerror="this.src='img/musiclogo.svg'">
                     <div class="play">
@@ -132,7 +132,7 @@ async function displayAlbum() {
                     </div>
                     <div class="caption">
                         <h2>${metadata.title}</h2>
-                        <p>${metadata.discription || ''}</p>
+                        <p>${metadata.description || ''}</p>
                         <small>${songs.length} songs</small>
                     </div>
                 </div>
@@ -148,7 +148,8 @@ async function displayAlbum() {
             const folder = event.currentTarget.dataset.folder;
             console.log("Loading songs from folder:", folder);
 
-            await getsongs(`songs/${folder}`);
+            // Clean up the path before fetching songs
+            await getsongs(`songs/${folder}`.replace(/\/+/g, '/'));
             if (songs.length > 0) {
                 playSong(0);
             }
