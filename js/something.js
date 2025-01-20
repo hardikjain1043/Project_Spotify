@@ -14,22 +14,18 @@ function formatTime(seconds) {
 
 async function getsongs(folder) {
     currentfolder = folder.endsWith("/") ? folder : folder + "/";
-    console.log("gettingsong from", currentfolder);
+    console.log("getting songs from", currentfolder);
 
     try {
-        let a = await fetch(`/${currentfolder}`);
-        let response = await a.text();
-        const htmldiv = document.createElement("div");
-        htmldiv.innerHTML = response;
-        let alinks = htmldiv.getElementsByTagName("a");
-        songs = [];
-        for (let index = 0; index < alinks.length; index++) {
-            const element = alinks[index];
-            if (element.href.includes(".mp3")) {
-                songs.push(element.href.split(`${currentfolder}`)[1]);
-            }
-        }
-        console.log(songs);
+        // Fetch the songs.json file from the folder
+        const response = await fetch(`/${currentfolder}songs.json`);
+        const songData = await response.json();
+
+        // Update the songs array with just the filenames
+        songs = songData.map(song => song.title + ".mp3");
+
+        console.log("Songs loaded:", songs);
+
         if (songs.length === 0) {
             alert("No songs found in the specified folder!");
         } else {
@@ -93,9 +89,8 @@ async function displayAlbum() {
     console.log("Fetching albums...");
 
     try {
-        const response = await fetch(`songs/`);
+        const response = await fetch('/songs/');
         const responseText = await response.text();
-        console.log(responseText);
 
         const albumDiv = document.createElement("div");
         albumDiv.innerHTML = responseText;
@@ -111,28 +106,37 @@ async function displayAlbum() {
                 const folder = anchor.href.split("/").slice(-2)[0];
                 console.log("Folder found:", folder);
 
-                // Fetch metadata for the folder
-                const metadataResponse = await fetch(`/songs/${folder}/info.json`);
-                const metadata = await metadataResponse.json();
+                try {
+                    // Fetch info.json for folder metadata
+                    const metadataResponse = await fetch(`/songs/${folder}/info.json`);
+                    const metadata = await metadataResponse.json();
 
-                // Append album card to the container
-                cardContainer.innerHTML += `
-                    <div class="card flex align-center justify-content rnd" data-folder="${folder}">
-                        <img class="rnd"
-                            src="/songs/${folder}/cover.png"
-                            alt="${metadata.title}">
-                        <div class="play">
-                            <svg fill="#000000" height="27px" width="27px" viewBox="0 0 512 512">
-                                <circle cx="256" cy="256" r="256" fill="green"></circle>
-                                <polygon points="189.776,141.328 189.776,370.992 388.672,256.16" fill="#000000"></polygon>
-                            </svg>
+                    // Fetch songs.json to get song count
+                    const songsResponse = await fetch(`/songs/${folder}/songs.json`);
+                    const songs = await songsResponse.json();
+
+                    // Append album card to the container
+                    cardContainer.innerHTML += `
+                        <div class="card flex align-center justify-content rnd" data-folder="${folder}">
+                            <img class="rnd"
+                                src="/songs/${folder}/cover.png"
+                                alt="${metadata.title}">
+                            <div class="play">
+                                <svg fill="#000000" height="27px" width="27px" viewBox="0 0 512 512">
+                                    <circle cx="256" cy="256" r="256" fill="green"></circle>
+                                    <polygon points="189.776,141.328 189.776,370.992 388.672,256.16" fill="#000000"></polygon>
+                                </svg>
+                            </div>
+                            <div class="caption">
+                                <h2>${metadata.title}</h2>
+                                <p>${metadata.discription}</p>
+                                <small>${songs.length} songs</small>
+                            </div>
                         </div>
-                        <div class="caption">
-                            <h2>${metadata.title}</h2>
-                            <p>${metadata.discription}</p>
-                        </div>
-                    </div>
-                `;
+                    `;
+                } catch (error) {
+                    console.error(`Error loading metadata for folder ${folder}:`, error);
+                }
             }
         }
 
@@ -292,45 +296,45 @@ async function main() {
     document.querySelector(".volume").addEventListener("click", e => {
         console.log(e.target);
         if (e.target.src.includes("speakimg.svg")) {
-            e.target.src=e.target.src.replace("speakimg.svg","mute.svg")
+            e.target.src = e.target.src.replace("speakimg.svg", "mute.svg")
             audio.volume = .0;
-            document.querySelector(".range").getElementsByTagName("input")[0].value=0;
+            document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
         } else {
-            e.target.src= e.target.src.replace("mute.svg","speakimg.svg")
-           audio.volume = .1;
-        //    document.querySelector(".range").getElementsByTagName("input")[0].value=10;
+            e.target.src = e.target.src.replace("mute.svg", "speakimg.svg")
+            audio.volume = .1;
+            //    document.querySelector(".range").getElementsByTagName("input")[0].value=10;
         }
     })
 
     //setuping loop fuction
-    let isloop= false;
-//autoplay
-    audio.addEventListener("ended",()=>{
-        if(isloop){
-            audio.currentTime=0;
+    let isloop = false;
+    //autoplay
+    audio.addEventListener("ended", () => {
+        if (isloop) {
+            audio.currentTime = 0;
             audio.play();
-        }else{
-            if(currentSongIndex<songs.length-1){
+        } else {
+            if (currentSongIndex < songs.length - 1) {
                 currentSongIndex++;
                 playSong(currentSongIndex);
-            }else{
+            } else {
                 audio.pause();
-                play.src="img/playingbutton.svg";
+                play.src = "img/playingbutton.svg";
             }
         }
     });
- //loop for 1 song
- document.querySelector("#loop").addEventListener("click",()=>{
-        isloop=!isloop;
-        if(isloop){
+    //loop for 1 song
+    document.querySelector("#loop").addEventListener("click", () => {
+        isloop = !isloop;
+        if (isloop) {
             console.log("loop enabled");
-            document.querySelector("#loop").src="img/loopon.svg";
-        }else{
+            document.querySelector("#loop").src = "img/loopon.svg";
+        } else {
             console.log("loop is off");
-            document.querySelector("#loop").src="img/loop.svg";
+            document.querySelector("#loop").src = "img/loop.svg";
         }
     });
-    
+
 
 }
 main();
