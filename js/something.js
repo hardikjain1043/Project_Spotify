@@ -84,12 +84,23 @@ function updateUI(index) {
     document.querySelector(".circle").style.left = "0%";
 }
 
+async function getalbumlist() {
+ try{
+    const response=await fetch("/songs/albumlist.json");
+    const albumlist=await response.json();
+    console.log(albumlist);
+ }   catch(error){
+    console.error("Error fetching album list:", error);
+    return ["1","2", "ncs","Gymsongs", "phonk"];
+ }
+}
+
 
 async function displayAlbum() {
     console.log("Fetching albums...");
-
+   const albums=[];;
     try {
-        const response = await fetch('/songs/');
+        const response = await fetch(`/songs/${albums}`);
         const responseText = await response.text();
 
         const albumDiv = document.createElement("div");
