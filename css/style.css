@@ -2,6 +2,11 @@
     margin: 0;
     padding: 0;
     font-family: "Poppins", serif;
+    /* box-sizing: border-box; */
+}
+body ,html{
+    height: 100vh; 
+    background-color: #121212;
 }
 
 .leftout .left{
@@ -29,7 +34,9 @@
     top: 75px;
     width: auto;
 }
-
+/* body, html{
+    height: 120vh;
+} */
 
 .navout{
     height: 60px;

@@ -132,7 +132,7 @@ async function displayAlbum() {
                     </div>
                     <div class="caption">
                         <h2>${metadata.title}</h2>
-                        <p>${metadata.description || ''}</p>
+                        <p>${metadata.discription || ''}</p>
                         <small>${songs.length} songs</small>
                     </div>
                 </div>

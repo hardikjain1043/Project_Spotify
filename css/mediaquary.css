@@ -104,10 +104,11 @@
         padding: 0px;
     }
 
-    .playbuttons {
+    /* .playbuttons {
         gap: 13px;
-    }
+    } */
 }
+
 
 @media (max-width: 385px) {
     
