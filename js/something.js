@@ -86,13 +86,14 @@ function updateUI(index) {
 
 async function getalbumlist() {
     try {
-        const response = await fetch("/songs/albumlist.json");
+        // Update the path to match your GitHub Pages URL structure
+        const response = await fetch("/spotifytryingagain/songs/albumlist.json");
         const albumlist = await response.json();
         console.log("Albums loaded:", albumlist);
         return albumlist;
     } catch (error) {
         console.error("Error fetching album list:", error);
-        return ["2", "ncs", "phonk"];
+        return ["1", "2", "ncs", "Gymsongs", "phonk"];
     }
 }
 
