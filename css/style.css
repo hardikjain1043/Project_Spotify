@@ -4,7 +4,7 @@
     font-family: "Poppins", serif;
     /* box-sizing: border-box; */
 }
-body ,html{
+html{
     height: 100vh; 
     background-color: #121212;
 }
