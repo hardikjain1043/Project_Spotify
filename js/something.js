@@ -93,7 +93,7 @@ async function displayAlbum() {
     console.log("Fetching albums...");
 
     try {
-        const response = await fetch(`/songs`);
+        const response = await fetch(`songs/`);
         const responseText = await response.text();
         console.log(responseText);
 
