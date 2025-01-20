@@ -17,7 +17,7 @@ async function getsongs(folder) {
     console.log("gettingsong from", currentfolder);
 
     try {
-        let a = await fetch(`http://127.0.0.1:3000/${currentfolder}`);
+        let a = await fetch(`/${currentfolder}`);
         let response = await a.text();
         const htmldiv = document.createElement("div");
         htmldiv.innerHTML = response;
@@ -48,7 +48,7 @@ function playSong(index) {
         return;
     }
 
-    const track = `http://127.0.0.1:3000/${currentfolder}${songs[index]}`;
+    const track = `/${currentfolder}${songs[index]}`;
     console.log("Track to play:", track);
 
     audio.src = track;
@@ -68,7 +68,7 @@ function playSong(index) {
     //     <div class="carimg">
     //         <img src="musiclogo.svg" alt="">
     //     </div>
-    //     <div class="wrap">${track.replace(`http://127.0.0.1:3000/${currentfolder}`, "")
+    //     <div class="wrap">${track.replace(`/${currentfolder}`, "")
     //                               .replaceAll("%20", " ")
     //                               .replace(/\.\w+$/, "")}</div>`;
     // document.querySelector(".finaltime").innerText = "00:00";
@@ -93,8 +93,9 @@ async function displayAlbum() {
     console.log("Fetching albums...");
 
     try {
-        const response = await fetch(`http://127.0.0.1:3000/songs/`);
+        const response = await fetch(`/songs/`);
         const responseText = await response.text();
+        console.log(responseText);
 
         const albumDiv = document.createElement("div");
         albumDiv.innerHTML = responseText;
@@ -111,7 +112,7 @@ async function displayAlbum() {
                 console.log("Folder found:", folder);
 
                 // Fetch metadata for the folder
-                const metadataResponse = await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`);
+                const metadataResponse = await fetch(`/songs/${folder}/info.json`);
                 const metadata = await metadataResponse.json();
 
                 // Append album card to the container
@@ -197,7 +198,7 @@ async function main() {
         // console.log(e.target.);
         e.addEventListener("click", () => {
             currentSongIndex = index;
-            audio.src = `http://127.0.0.1:3000/${currentfolder}${e.querySelector(".info div").innerText}.mp3`;
+            audio.src = `/${currentfolder}${e.querySelector(".info div").innerText}.mp3`;
             playSong(audio.src, index);
             play.src = "img/plaed.svg";
         });
