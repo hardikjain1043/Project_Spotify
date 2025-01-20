@@ -101,26 +101,23 @@ async function displayAlbum() {
     console.log("Fetching albums...");
     const albums = await getalbumlist();
     const cardContainer = document.querySelector(".card-container");
-    cardContainer.innerHTML = ""; // Clear existing content
+    cardContainer.innerHTML = "";
 
-    // Process each album individually
     for (const folder of albums) {
         try {
             console.log(`Processing album: ${folder}`);
 
-            // Fetch info.json for folder metadata
-            const metadataResponse = await fetch(`/songs/${folder}/info.json`);
+            // Update paths to include /spotifytryingagain/
+            const metadataResponse = await fetch(`/spotifytryingagain/songs/${folder}/info.json`);
             const metadata = await metadataResponse.json();
 
-            // Fetch songs.json to get song count
-            const songsResponse = await fetch(`/songs/${folder}/songs.json`);
+            const songsResponse = await fetch(`/spotifytryingagain/songs/${folder}/songs.json`);
             const songs = await songsResponse.json();
 
-            // Append album card to the container
             cardContainer.innerHTML += `
                 <div class="card flex align-center justify-content rnd" data-folder="${folder}">
                     <img class="rnd"
-                        src="/songs/${folder}/cover.png"
+                        src="/spotifytryingagain/songs/${folder}/cover.png"
                         alt="${metadata.title}">
                     <div class="play">
                         <svg fill="#000000" height="27px" width="27px" viewBox="0 0 512 512">
