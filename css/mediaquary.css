@@ -87,7 +87,7 @@
     }
 
     .seekbar {
-        width: 35vw;
+        width: 200px;
     }
     .nav{
         background-color: #1f1f1f;
@@ -104,10 +104,9 @@
         padding: 0px;
     }
 
-    /* .playbuttons {
-        gap: 13px;
-    } */
+   
 }
+
 
 
 @media (max-width: 385px) {

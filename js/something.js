@@ -165,7 +165,7 @@ function displaySongList() {
         // Use the title from the song object
         const songName = song.title;
 
-        const songItem = document.createElement("li");
+        let songItem = document.createElement("li");
         songItem.classList.add("flex");
         songItem.innerHTML = `
             <img src="img/musiclogo.svg" alt="" class="invert musiclogo p-1">
@@ -173,7 +173,7 @@ function displaySongList() {
                 <div>${songName}</div>
             </div>
             <div class="playimgbut flex artist m-1">
-                <img src="img/playingbutton.svg" class="invert play-song pauseside2" data-index="${index}" alt="">
+                <img id ="sideplay" src="img/playingbutton.svg" class="invert play-song pauseside2" data-index="${index}" alt="">
                 <span class="playnow flex align-center">play song</span>
             </div>`;
 
@@ -185,6 +185,8 @@ function displaySongList() {
         songListContainer.appendChild(songItem);
     });
 }
+//display playing
+
 
 async function main() {
     // console.log(getsongs("songs/p2"));
@@ -202,7 +204,8 @@ async function main() {
         e.addEventListener("click", () => {
             currentSongIndex = index;
             audio.src = `${currentfolder}${e.querySelector(".info div").innerText}.mp3`;
-            playSong(index);
+            playSong(index);      
+            document.getElementById("sideplay").src="img/plaed.svg" 
             play.src = "img/plaed.svg";
         });
     })
@@ -277,6 +280,7 @@ async function main() {
         }
         playSong(currentSongIndex);
     });
+
     next.addEventListener("click", () => {
         if (currentSongIndex < songs.length - 1) {
             currentSongIndex++;
@@ -285,11 +289,37 @@ async function main() {
         }
         playSong(currentSongIndex);
     });
+
+
+    //with arrow
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "ArrowLeft") {
+            if (currentSongIndex > 0) {
+                currentSongIndex--;
+            } else {
+                currentSongIndex = songs.length - 1;
+            }
+            playSong(currentSongIndex);
+        } else if (event.code === "ArrowRight") {
+            if (currentSongIndex < songs.length - 1) {
+                currentSongIndex++;
+            } else {
+                currentSongIndex = 0;
+            }
+            playSong(currentSongIndex);
+        }
+    });
+
+
+
     //setup-ing speaker mute and unmute
     document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e) => {
         console.log("setting volume to ", e.target.value);
         audio.volume = e.target.value / 100;
+        // document.querySelector(".range").getElementsByTagName("input")[0].value = e.target.value;
+        // document.querySelector(".volume").src = e.target.value === "0" ? "img/mute.svg" : "img/speakimg.svg";
     })
+
     // volume mute and unmute
 
     document.querySelector(".volume").addEventListener("click", e => {
