@@ -216,14 +216,13 @@ async function main() {
             alert("Bhai Song pe to click krr , jo chalana hai");
         } else if (audio.paused) {
             audio.play();
-            play.src = "img/plaed.svg";
+            play.src = "img/plaed.svg";0
         } else {
             audio.pause();
             play.src = "img/playingbutton.svg";
         }
-    });
-
-
+    }); 
+    
     document.addEventListener("keydown", (event) => {
         if (event.code === "Space") {
             event.preventDefault();
